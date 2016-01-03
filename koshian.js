@@ -58,12 +58,10 @@ Koshian.discover = function (callback, uuid) {
 };
 
 Koshian.prototype.onDisconnect = function () {
-    console.log('on -> disconnect')
 	this.emit('disconnect');
 };
 
 Koshian.prototype.onConnect = function () {
-    console.log('on -> connect')
 	this.emit('connect');
 };
 

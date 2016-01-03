@@ -19,12 +19,12 @@ function calcHumidity(data){
     return data / 65536.0 * 100.0;
 }
 
-//TODO: 切断時にInterval処理をやめる
 //TODO: 接続後の切断時に自動で再度discoverする処理を追加
-//TODO: async.seriesでsetIntervalってありなのかチェック
 
 //見つけて接続してI2C読み出す
 Koshian.discover(function (koshian){
+    var intervalId = 0;
+    
     async.series([
         function(cb) {
             console.log('connect');
@@ -43,7 +43,7 @@ Koshian.discover(function (koshian){
             koshian.i2cWrite(ADDR_HDC1000, REG_CONFIG, new Buffer([0x10, 0x00]), cb);
         },
         function(cb) {
-            setInterval(function() {
+            intervalId = setInterval(function() {
                 console.log('i2cRead');
                 koshian.i2cRead(ADDR_HDC1000, REG_DATA, 4, WAIT_HDC1000, function(error, data){
                     if (data){
@@ -52,6 +52,12 @@ Koshian.discover(function (koshian){
                     }
                 });
             }, 1000);
+            koshian.removeAllListeners('disconnect');
+            koshian.on('disconnect', function() {
+                console.log('disconnected')
+                clearInterval(intervalId);
+            });
+            cb(null);
         }
     ]);
 });
