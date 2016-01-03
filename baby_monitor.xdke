@@ -1,0 +1,78 @@
+{
+  "project": {
+    "projectSettingsVersion": "2.0.0",
+    "initialAutoPluginCount": 0,
+    "currentBuildConfiguration": "Android",
+    "projectFiles": {},
+    "projectDirectories": {}
+  },
+  "iot-tab": {
+    "fileStatus": {
+      "baby_monitor.xdk": {
+        "previousModTime": 1451628254533,
+        "modified": 1451628254533,
+        "seen": true,
+        "name": "baby_monitor.xdk"
+      },
+      "baby_monitor.xdke": {
+        "previousModTime": 1451788716314,
+        "modified": 1451788716314,
+        "seen": true,
+        "name": "baby_monitor.xdke"
+      },
+      "icon.png": {
+        "previousModTime": 1451628254220,
+        "modified": 1451628254220,
+        "seen": true,
+        "name": "icon.png"
+      },
+      "main.js": {
+        "previousModTime": 1451788817591,
+        "modified": 1451788817591,
+        "seen": true,
+        "name": "main.js"
+      },
+      "package.json": {
+        "previousModTime": 1451742968163,
+        "modified": 1451742968163,
+        "seen": true,
+        "name": "package.json"
+      },
+      "README.md": {
+        "previousModTime": 1451628254223,
+        "modified": 1451628254223,
+        "seen": true,
+        "name": "README.md"
+      },
+      "xdk/project-info.json": {
+        "previousModTime": 1451628254498,
+        "modified": 1451628254498,
+        "seen": true,
+        "name": "xdk/project-info.json"
+      },
+      "#main.js#": {
+        "previousModTime": 1451705325093,
+        "modified": 1451705325093,
+        "seen": true,
+        "name": "#main.js#"
+      },
+      ".#main.js": {
+        "previousModTime": 1451705180660,
+        "modified": 1451705180660,
+        "seen": true,
+        "name": ".#main.js"
+      },
+      "main.js~": {
+        "previousModTime": 1451701690959,
+        "modified": 1451701690959,
+        "seen": true,
+        "name": "main.js~"
+      }
+    },
+    "boardFileStatus": {
+      "main.js": {
+        "previousModTime": 1451788824766
+      }
+    }
+  }
+}
