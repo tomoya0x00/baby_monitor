@@ -19,6 +19,10 @@ function calcHumidity(data){
     return data / 65536.0 * 100.0;
 }
 
+//TODO: 切断時にInterval処理をやめる
+//TODO: 接続後の切断時に自動で再度discoverする処理を追加
+//TODO: async.seriesでsetIntervalってありなのかチェック
+
 //見つけて接続してI2C読み出す
 Koshian.discover(function (koshian){
     async.series([
@@ -41,7 +45,7 @@ Koshian.discover(function (koshian){
         function(cb) {
             setInterval(function() {
                 console.log('i2cRead');
-                koshian.i2cRead(ADDR_HDC1000, REG_DATA, 4, function(error, data){
+                koshian.i2cRead(ADDR_HDC1000, REG_DATA, 4, WAIT_HDC1000, function(error, data){
                     if (data){
                         console.log(' - result : ', calcTemperature(data.readUInt16BE(0)),
                                     calcHumidity(data.readUInt16BE(2)));

@@ -128,7 +128,7 @@ Koshian.prototype.i2cWrite = function(addr, reg, data, callback) {
     });
 }
 
-Koshian.prototype.i2cRead = function(addr, reg, len, callback){
+Koshian.prototype.i2cRead = function(addr, reg, len, wait, callback){
     self = this
     async.series([
         function(cb) {
@@ -143,7 +143,7 @@ Koshian.prototype.i2cRead = function(addr, reg, len, callback){
         function(cb) {
             setTimeout(function(){
                 cb(null);
-            }, 15); // TODO: 引数にする？
+            }, wait);
         },
         function(cb) {
             self.writeCharacteristic(KOSHIAN_I2C_START_STOP_UUID, new Buffer([KOSHIAN_I2C_CONDITION_START]), cb);
