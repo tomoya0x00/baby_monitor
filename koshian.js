@@ -38,6 +38,7 @@ Koshian.discover = function (callback, uuid) {
                 if (peripheral.advertisement.localName.indexOf('konashi2') > -1 && (uuid === undefined || uuid === peripheral.uuid)) {
 					noble.removeListener('discover', onDiscover);
 					noble.stopScanning();
+                    console.log(peripheral);
 					var koshian = new Koshian(peripheral);
 					callback(koshian);
 				}
