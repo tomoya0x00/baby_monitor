@@ -15,6 +15,15 @@ var noble = require('noble');
  
 console.log('noble');
 
+
+function calcTemperature(data){
+    return data / 65536.0 * 165.0 - 40.0;
+}
+
+function calcHumidity(data){
+    return data / 65536.0 * 100.0;
+}
+
 var i2c = function(characteristics) {
     this.characteristics = characteristics
 }
@@ -134,7 +143,7 @@ noble.on('discover', function(peripheral) {   //advertising data受信時のcalb
                                                             // read received data
                                                             characteristics[4].read(function(error, data){
                                                                 if (data){
-                                                                    console.log( i++ + ' - temperature : ', data);
+                                                                    console.log( i++ + ' - result : ', calcTemperature(data.readUInt16BE(0)), calcHumidity(data.readUInt16BE(2)));
                                                             }
                                                             });
                                                         });
