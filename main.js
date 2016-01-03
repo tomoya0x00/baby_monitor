@@ -5,6 +5,8 @@ const ADDR_HDC1000 = 0x40
 const REG_DATA   = 0x00
 const REG_CONFIG = 0x02
 
+const WAIT_HDC1000 = 15
+
 const KOSHIAN_I2C_MODE_ENABLE_100K  = 0x01
 
 const KOSHIAN_I2C_CONDITION_STOP    = 0x00
@@ -22,47 +24,6 @@ function calcTemperature(data){
 
 function calcHumidity(data){
     return data / 65536.0 * 100.0;
-}
-
-var i2c = function(characteristics) {
-    this.characteristics = characteristics
-}
-
-i2c.prototype.write = function(buf, callback) {    
-    self = this
-    
-    self.characteristics[1].write(new Buffer([KOSHIAN_I2C_CONDITION_START]), false, function(error){
-        self.characteristics[2].write(buf, false, function(error){
-            self.characteristics[1].write(new Buffer([KOSHIAN_I2C_CONDITION_STOP]), false, callback)
-        });
-    });
-}
-
-i2c.prototype.read = function(addr, reg, callback) {
-    self = this
-    // send StartCondition
-    self.characteristics[1].write(new Buffer([KOSHIAN_I2C_CONDITION_START]), false, function(error){
-        // send register-address
-        self.characteristics[2].write(new Buffer([2, (addr << 1) & 0xFE, reg]), false, function(error){
-            // send RestartCondition
-            self.characteristics[1].write(new Buffer([KOSHIAN_I2C_CONDITION_RESTART]), false, function(error){
-                setTimeout(function(){
-                    // request data read 
-                    self.characteristics[3].write(new Buffer([2, (addr << 1) | 0x01]), false, function(error){
-                        // send StopCondition
-                        self.characteristics[1].write(new Buffer([KOSHIAN_I2C_CONDITION_STOP]), false, function(error){
-                            // read received data
-                            self.characteristics[4].read(function(error, data){
-                                if (data){
-                                    console.log('data: ', data);
-                                }
-                            });
-                        });
-                    });
-                }, 15);
-            });
-        });
-    });
 }
 
 noble.on('stateChange', function(state) {
@@ -123,38 +84,56 @@ noble.on('discover', function(peripheral) {   //advertising data受信時のcalb
                 console.log('service_uuid ' + characteristics[i]._serviceUuid + ' characteristic[' + i + '] ' + characteristics[i]);
             }
 
-            var konashi = new i2c(characteristics);
-            characteristics[0].write(new Buffer([KOSHIAN_I2C_MODE_ENABLE_100K]), false, function(error){
-                characteristics[1].write(new Buffer([KOSHIAN_I2C_CONDITION_START]), false, function(error){
-                    characteristics[2].write(new Buffer([4, (ADDR_HDC1000 << 1) & 0xFE, REG_CONFIG, 0x10, 0x00]), false, function(error){
-                        var i = 0;
-                        characteristics[1].write(new Buffer([KOSHIAN_I2C_CONDITION_STOP]), false, function(error){
-                            setInterval(function(){
-                                characteristics[1].write(new Buffer([KOSHIAN_I2C_CONDITION_START]), false, function(error){
-                                    // send register-address
-                                    characteristics[2].write(new Buffer([2, (ADDR_HDC1000 << 1) & 0xFE, REG_DATA]), false, function(error){
-                                        characteristics[1].write(new Buffer([KOSHIAN_I2C_CONDITION_STOP]), false, function(error){
-                                            setTimeout(function(){
-                                                characteristics[1].write(new Buffer([KOSHIAN_I2C_CONDITION_START]), false, function(error){
-                                                    // request data read 
-                                                    characteristics[3].write(new Buffer([4, (ADDR_HDC1000 << 1) | 0x01]), false, function(error){
-                                                        // send StopCondition
-                                                        characteristics[1].write(new Buffer([KOSHIAN_I2C_CONDITION_STOP]), false, function(error){
-                                                            // read received data
-                                                            characteristics[4].read(function(error, data){
-                                                                if (data){
-                                                                    console.log( i++ + ' - result : ', calcTemperature(data.readUInt16BE(0)), calcHumidity(data.readUInt16BE(2)));
-                                                            }
-                                                            });
-                                                        });
-                                                    });
-                                                });
-                                            }, 15);
+            var i2cMode = function(mode, callback){
+                characteristics[0].write(new Buffer([mode]), false, callback);
+            }
+
+            var i2cStartCondition = function(callback){
+                characteristics[1].write(new Buffer([KOSHIAN_I2C_CONDITION_START]), false, callback);
+            }
+
+            var i2cStopCondition = function(callback){
+                characteristics[1].write(new Buffer([KOSHIAN_I2C_CONDITION_STOP]), false, callback);
+            }
+
+            var i2cWrite = function(addr, reg, data, callback){
+                i2cStartCondition(function(error){
+                    header = new Buffer([2 + data.length, (addr << 1) & 0xFE, reg]);
+                    characteristics[2].write(Buffer.concat([header, data]), false, function(error){
+                        i2cStopCondition(callback);
+                    });
+                });
+            }
+
+            var i2cRead = function(addr, reg, len, callback){
+                i2cStartCondition(function(error){
+                    characteristics[2].write(new Buffer([2, (addr << 1) & 0xFE, reg]), false, function(error){
+                        i2cStopCondition(function(error){
+                            setTimeout(function(){
+                                i2cStartCondition(function(error){
+                                    characteristics[3].write(new Buffer([len, (addr << 1) | 0x01]), false, function(error){
+                                        i2cStopCondition(function(error){
+                                            characteristics[4].read(function(error, data){
+                                                callback(error, data);
+                                            });
                                         });
                                     });
                                 });
-                            }, 1000)});
+                            }, WAIT_HDC1000);
+                        });
                     });
+                });
+            }        
+            
+            i2cMode(KOSHIAN_I2C_MODE_ENABLE_100K, function(error){
+                i2cWrite(ADDR_HDC1000, REG_CONFIG, new Buffer([0x10, 0x00]), function(error){
+                    setInterval(function(){
+                        i2cRead(ADDR_HDC1000, REG_DATA, 4, function(error, data){
+                            if (data){
+                                console.log(' - result : ', calcTemperature(data.readUInt16BE(0)), calcHumidity(data.readUInt16BE(2)));
+                            }
+                        });
+                    }, 1000);
                 });
             });
         });
