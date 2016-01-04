@@ -15,8 +15,8 @@
         "name": "baby_monitor.xdk"
       },
       "baby_monitor.xdke": {
-        "previousModTime": 1451834125241,
-        "modified": 1451834125241,
+        "previousModTime": 1451920329776,
+        "modified": 1451920329776,
         "seen": true,
         "name": "baby_monitor.xdke"
       },
@@ -27,14 +27,14 @@
         "name": "icon.png"
       },
       "main.js": {
-        "previousModTime": 1451833157041,
-        "modified": 1451833157041,
+        "previousModTime": 1451921592459,
+        "modified": 1451921592459,
         "seen": true,
         "name": "main.js"
       },
       "package.json": {
-        "previousModTime": 1451810184194,
-        "modified": 1451810184194,
+        "previousModTime": 1451919882231,
+        "modified": 1451919882231,
         "seen": true,
         "name": "package.json"
       },
@@ -87,6 +87,10 @@
         "name": ".#koshian.js"
       }
     },
-    "boardFileStatus": {}
+    "boardFileStatus": {
+      "main.js": {
+        "previousModTime": 1451921628463
+      }
+    }
   }
 }

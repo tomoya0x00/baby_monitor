@@ -7,7 +7,15 @@ const REG_CONFIG = 0x02
 
 const WAIT_HDC1000 = 15
 
+const ADDR_ST7032 = 0x7c
+
+const CMD_FUNCTIONSET = 0x20
+
 var async = require('async');
+var mraa = require('mraa');
+console.log('MRAA Version: ' + mraa.getVersion());
+
+// TODO:st7032のライブラリを作る
 
 var Koshian = require('./koshian')
  
