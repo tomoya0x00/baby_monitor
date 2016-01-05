@@ -15,8 +15,8 @@
         "name": "baby_monitor.xdk"
       },
       "baby_monitor.xdke": {
-        "previousModTime": 1451920329776,
-        "modified": 1451920329776,
+        "previousModTime": 1452015680014,
+        "modified": 1452015680014,
         "seen": true,
         "name": "baby_monitor.xdke"
       },
@@ -27,8 +27,8 @@
         "name": "icon.png"
       },
       "main.js": {
-        "previousModTime": 1451921592459,
-        "modified": 1451921592459,
+        "previousModTime": 1452015225044,
+        "modified": 1452015225044,
         "seen": true,
         "name": "main.js"
       },
@@ -39,8 +39,8 @@
         "name": "package.json"
       },
       "README.md": {
-        "previousModTime": 1451628254223,
-        "modified": 1451628254223,
+        "previousModTime": 1451921743469,
+        "modified": 1451921743469,
         "seen": true,
         "name": "README.md"
       },
@@ -57,8 +57,8 @@
         "name": "#main.js#"
       },
       ".#main.js": {
-        "previousModTime": 1451705180660,
-        "modified": 1451705180660,
+        "previousModTime": 1452014780506,
+        "modified": 1452014780506,
         "seen": true,
         "name": ".#main.js"
       },
@@ -85,11 +85,35 @@
         "modified": 1451831558334,
         "seen": true,
         "name": ".#koshian.js"
+      },
+      ".gitignore": {
+        "previousModTime": 1451921743465,
+        "modified": 1451921743465,
+        "seen": true,
+        "name": ".gitignore"
+      },
+      "LICENSE": {
+        "previousModTime": 1451921743467,
+        "modified": 1451921743467,
+        "seen": true,
+        "name": "LICENSE"
+      },
+      "st7032.js": {
+        "previousModTime": 1452015797984,
+        "modified": 1452015797984,
+        "seen": true,
+        "name": "st7032.js"
+      },
+      "st7032.js~": {
+        "previousModTime": 1452010684605,
+        "modified": 1452010684605,
+        "seen": true,
+        "name": "st7032.js~"
       }
     },
     "boardFileStatus": {
-      "main.js": {
-        "previousModTime": 1451921628463
+      "st7032.js": {
+        "previousModTime": 1452015809014
       }
     }
   }
