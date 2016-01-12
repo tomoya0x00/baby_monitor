@@ -30,6 +30,7 @@ function calcHumidity(data) {
   return data / 65536.0 * 100.0;
 }
 
+// TODO:表示更新している事がわかるようブリンクなどを検討
 function displayTemperatureAndHumidity(temp, hum) {
   async.series([
     function(cb) {
@@ -39,6 +40,7 @@ function displayTemperatureAndHumidity(temp, hum) {
       lcd.setCursor(0, 0, cb);
     },
     function(cb) {
+      // TODO:℃表示を使うように変更
       lcd.putText(temp.toFixed(2) + " C", cb);
     },
     function(cb) {
