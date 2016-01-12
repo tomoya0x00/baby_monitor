@@ -20,6 +20,13 @@ ST7032.use = function(bus, addr) {
   return lcd;
 }
 
+// TODO:clearの実装
+// TODO:homeの実装
+// TODO:putTextの実装
+// TODO:setLineの実装
+// TODO:setContrastの実装
+
+// TODO:初期設定値の調整
 ST7032.prototype.init = function() {
   self = this;
   async.series([

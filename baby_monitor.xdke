@@ -15,8 +15,8 @@
         "name": "baby_monitor.xdk"
       },
       "baby_monitor.xdke": {
-        "previousModTime": 1452530207464,
-        "modified": 1452530207464,
+        "previousModTime": 1452530307773,
+        "modified": 1452530307773,
         "seen": true,
         "name": "baby_monitor.xdke"
       },
@@ -117,10 +117,6 @@
         "name": "#koshian.js#"
       }
     },
-    "boardFileStatus": {
-      "st7032.js": {
-        "previousModTime": 1452530307690
-      }
-    }
+    "boardFileStatus": {}
   }
 }
