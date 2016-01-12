@@ -30,7 +30,27 @@ function calcHumidity(data) {
   return data / 65536.0 * 100.0;
 }
 
-//見つけて接続してI2C読み出す
+function displayTemperatureAndHumidity(temp, hum) {
+  async.series([
+    function(cb) {
+      lcd.clear(cb);
+    },
+    function(cb) {
+      lcd.setCursor(0, 0, cb);
+    },
+    function(cb) {
+      lcd.putText(temp.toFixed(2) + " C", cb);
+    },
+    function(cb) {
+      lcd.setCursor(0, 1, cb);
+    },
+    function(cb) {
+      lcd.putText(hum.toFixed(2) + " %", cb);
+
+    }
+  ]);
+}
+
 console.log('start')
 Koshian.discover(function(koshian) {
   console.log('found koshian')
@@ -64,6 +84,8 @@ Koshian.discover(function(koshian) {
           koshian.i2cRead(ADDR_HDC1000, REG_DATA, 4, WAIT_HDC1000, function(error, data) {
             if (data) {
               console.log(' - result : ', calcTemperature(data.readUInt16BE(0)),
+                calcHumidity(data.readUInt16BE(2)));
+              displayTemperatureAndHumidity(calcTemperature(data.readUInt16BE(0)),
                 calcHumidity(data.readUInt16BE(2)));
             }
           });
