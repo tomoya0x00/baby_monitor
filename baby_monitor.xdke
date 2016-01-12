@@ -15,8 +15,8 @@
         "name": "baby_monitor.xdk"
       },
       "baby_monitor.xdke": {
-        "previousModTime": 1452530307773,
-        "modified": 1452530307773,
+        "previousModTime": 1452614650332,
+        "modified": 1452614650332,
         "seen": true,
         "name": "baby_monitor.xdke"
       },
@@ -27,8 +27,8 @@
         "name": "icon.png"
       },
       "main.js": {
-        "previousModTime": 1452524926332,
-        "modified": 1452524926332,
+        "previousModTime": 1452614669312,
+        "modified": 1452614669312,
         "seen": true,
         "name": "main.js"
       },
@@ -99,8 +99,8 @@
         "name": "LICENSE"
       },
       "st7032.js": {
-        "previousModTime": 1452530300375,
-        "modified": 1452530300375,
+        "previousModTime": 1452614608663,
+        "modified": 1452614608663,
         "seen": true,
         "name": "st7032.js"
       },
@@ -117,6 +117,10 @@
         "name": "#koshian.js#"
       }
     },
-    "boardFileStatus": {}
+    "boardFileStatus": {
+      "main.js": {
+        "previousModTime": 1452614674370
+      }
+    }
   }
 }

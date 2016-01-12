@@ -8,7 +8,6 @@ const REG_CONFIG = 0x02
 const WAIT_HDC1000 = 15
 
 const ADDR_ST7032 = 0x3e
-  //const ADDR_ST7032 = 0x7c
 
 var async = require('async');
 
@@ -16,7 +15,12 @@ var Koshian = require('./koshian');
 var ST7032 = require('./st7032');
 
 var lcd = ST7032.use(1, ADDR_ST7032);
-lcd.init();
+lcd.init(function() {
+  lcd.setCursor(0, 1,
+    function() {
+      lcd.putText("hage");
+    });
+});
 
 function calcTemperature(data) {
   return data / 65536.0 * 165.0 - 40.0;
